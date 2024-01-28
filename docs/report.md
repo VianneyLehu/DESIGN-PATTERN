@@ -15,6 +15,19 @@
 > - What did you need to change
 > - Anything relevant
 > 
+> 
+>  ANSWERS : 
+> 
+> - I changed the way command insert and list are handled.
+     I did an interface and 2 new classes: insertCommandHandler and ListCommandHandler.
+It simplify the old code (if logic) and it is easier to implement future command.
+> - I asked chatgpt and a friend developer to find how would i modify the code. 
+> - Understand how the code works.
+> - Copy code without understanding how it work.
+> - the way different commands are handle. 
+> - I hate java.
+> 
+> 
 > Add a link to schemas describing your architecture (UML or not but add a legend)
 > 
 > Remember: it is ok to make mistakes, you will have time to spot them later.
