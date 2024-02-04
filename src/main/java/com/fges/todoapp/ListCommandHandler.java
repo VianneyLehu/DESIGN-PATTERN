@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 public class ListCommandHandler implements CommandHandler {
     @Override
-    public void handle(String[] args, String fileName) throws IOException {
+    public void handle(String[] args, String fileName, boolean isDone) throws IOException {
         Path filePath = Paths.get(fileName);
         String fileContent = "";
 
@@ -31,13 +31,16 @@ public class ListCommandHandler implements CommandHandler {
             }
 
             if (actualObj instanceof ArrayNode arrayNode) {
-                arrayNode.forEach(node -> System.out.println("- " + node.toString()));
+                arrayNode.forEach(node -> {
+                    JsonNode todoNode = node.get("todo");
+                    JsonNode doneNode = node.get("done");
+                    if (isDone && doneNode != null && doneNode.asBoolean()) {
+                        System.out.println("- " + todoNode.asText());
+                    } else if (!isDone || doneNode == null || !doneNode.asBoolean()) {
+                        System.out.println("- " + todoNode.asText());
+                    }
+                });
             }
-        } else if (fileName.endsWith(".csv")) {
-            // CSV
-            System.out.println(fileContent.replaceAll("\n", "\n- "));
-        } else {
-            System.err.println("Unsupported file format");
         }
     }
 }

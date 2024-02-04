@@ -37,9 +37,10 @@ public class App {
     }
     public static int exec(String[] args) throws IOException {
         Options cliOptions = new Options();
-        CommandLineParser parser = new DefaultParser();
-
         cliOptions.addRequiredOption("s", "source", true, "File containing the todos");
+        cliOptions.addOption("d", "done", false, "Mark the todo as done");
+
+        CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
         try {
@@ -64,7 +65,9 @@ public class App {
             return 1;
         }
 
-        handler.handle(positionalArgs.toArray(new String[0]), fileName);
+        // Pass the --done flag to the handler
+        boolean isDone = cmd.hasOption("d");
+        handler.handle(positionalArgs.toArray(new String[0]), fileName, isDone);
         return 0;
     }
 
