@@ -1,29 +1,11 @@
 package com.fges.todoapp;
 
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.MissingNode;
 import org.apache.commons.cli.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
-
-/**
- * Hello world!
- */
 
 public class App {
-
-    /**
-     * Do not change this method
-     */
 
     private static final Map<String, CommandHandler> commandHandlers = new HashMap<>();
 
@@ -32,13 +14,16 @@ public class App {
         commandHandlers.put("list", new ListCommandHandler());
         // Add more command handlers as needed
     }
+
     public static void main(String[] args) throws Exception {
         System.exit(exec(args));
     }
+
     public static int exec(String[] args) throws IOException {
         Options cliOptions = new Options();
         cliOptions.addRequiredOption("s", "source", true, "File containing the todos");
         cliOptions.addOption("d", "done", false, "Mark the todo as done");
+        cliOptions.addOption("a", "author", true, "Author of the todo");
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
@@ -67,8 +52,9 @@ public class App {
 
         // Pass the --done flag to the handler
         boolean isDone = cmd.hasOption("d");
-        handler.handle(positionalArgs.toArray(new String[0]), fileName, isDone);
+        String author = cmd.getOptionValue("a", "Undefined author"); // Get author if provided, default to empty string
+        TodoRepository todoRepository = new FileTodoRepository(fileName);
+        handler.handle(positionalArgs.toArray(new String[0]), todoRepository, isDone, author);
         return 0;
     }
-
 }

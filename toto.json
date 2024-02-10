@@ -1,1 +1,17 @@
-["bonjour a tous","bonjour a tous","bonjour a tous","bonjour a tous",{"todo":"I am done","done":true}]
+[ {
+  "content" : "ceci est un test",
+  "author" : "",
+  "done" : true
+}, {
+  "content" : "autre test",
+  "author" : "",
+  "done" : false
+}, {
+  "content" : "encore un test",
+  "author" : "benoit",
+  "done" : false
+}, {
+  "content" : "encore un ...",
+  "author" : "jean",
+  "done" : false
+} ]
