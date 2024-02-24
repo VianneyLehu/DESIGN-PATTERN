@@ -2,12 +2,10 @@ package com.fges.todoapp;
 
 public class Todo {
     private String content;
-    private String author;
     private boolean done;
 
-    public Todo(String content, String author, boolean done) {
+    public Todo(String content, boolean done) {
         this.content = content;
-        this.author = author;
         this.done = done;
     }
 
@@ -18,14 +16,6 @@ public class Todo {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public boolean isDone() {

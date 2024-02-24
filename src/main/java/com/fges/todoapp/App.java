@@ -12,6 +12,8 @@ public class App {
     static {
         commandHandlers.put("insert", new InsertCommandHandler());
         commandHandlers.put("list", new ListCommandHandler());
+        commandHandlers.put("migrate", new MigrationCommandHandler());
+
         // Add more command handlers as needed
     }
 
@@ -23,7 +25,7 @@ public class App {
         Options cliOptions = new Options();
         cliOptions.addRequiredOption("s", "source", true, "File containing the todos");
         cliOptions.addOption("d", "done", false, "Mark the todo as done");
-        cliOptions.addOption("a", "author", true, "Author of the todo");
+        cliOptions.addOption("o", "output", true, "Output file for migration");
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
@@ -36,6 +38,19 @@ public class App {
         }
 
         String fileName = cmd.getOptionValue("s");
+
+        if (cmd.hasOption("o")) {
+            String outputFileName = cmd.getOptionValue("o");
+            try {
+                MigrationHandler.migrate(fileName, outputFileName);
+                System.out.println("Migration completed successfully.");
+                return 0;
+            } catch (IOException e) {
+                System.err.println("Error occurred during migration: " + e.getMessage());
+                return 1;
+            }
+        }
+
 
         List<String> positionalArgs = cmd.getArgList();
         if (positionalArgs.isEmpty()) {
@@ -52,9 +67,9 @@ public class App {
 
         // Pass the --done flag to the handler
         boolean isDone = cmd.hasOption("d");
-        String author = cmd.getOptionValue("a", "Undefined author"); // Get author if provided, default to empty string
-        TodoRepository todoRepository = new FileTodoRepository(fileName);
-        handler.handle(positionalArgs.toArray(new String[0]), todoRepository, isDone, author);
+        FileHandler fileHandler = new FileHandler(fileName);
+        TodoRepository todoRepository = fileHandler.getFileRepository();
+        handler.handle(positionalArgs.toArray(new String[0]), todoRepository, isDone);
         return 0;
     }
 }
