@@ -13,7 +13,6 @@ public class MigrateJsonToJson {
 
         // Write to JSON file
         writeTodosToJsonFile(todos, outputJsonFileName);
-        System.out.println("Done.");
 
 
     }

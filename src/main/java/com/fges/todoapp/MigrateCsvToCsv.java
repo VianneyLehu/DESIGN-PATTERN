@@ -12,7 +12,6 @@ public class MigrateCsvToCsv {
         // Write to CSV file
         writeTodosToCsvFile(todos, outputCsvFileName);
 
-        System.out.println("Done.");
     }
 
     private static List<Todo> readTodosFromCsv(String csvFileName) throws IOException {

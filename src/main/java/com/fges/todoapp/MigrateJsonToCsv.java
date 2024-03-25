@@ -11,7 +11,6 @@ public class MigrateJsonToCsv {
 
         // Write to CSV file
         writeTodosToCsvFile(todos, outputCsvFileName);
-        System.out.println("Done.");
 
 
     }

@@ -14,6 +14,5 @@ public class ListCommandHandler implements CommandHandler {
                 System.out.println("- " + todo.getContent());
             }
         }
-        System.out.println("Done.");
     }
 }

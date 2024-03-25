@@ -12,6 +12,5 @@ public class InsertCommandHandler implements CommandHandler {
         String todoName = args[1];
         Todo todo = new Todo(todoName, isDone);
         todoRepository.insertTodo(todo);
-        System.out.println("Done.");
     }
 }
